@@ -1,17 +1,14 @@
 ---
 layout: post
+comments: true
 title: "Create routed virtual network in Openstack with Openvswitch"
-modified:
 categories: blog
-excerpt:
-tags: []
-image:
-  feature:
+tags: 
+  - openstack
+  - openvswitch
 date: 2017-06-02T15:39:55-04:00
 modified: 2017-06-02T14:19:19-04:00
 ---
-
-# A hack to create routed virtual network in Openstack with Openvswitch
 
 This is the hack to create a routed (not NAT-ed) virtual network in Openstack with Openvswitch that was installed using PackStack.
 
