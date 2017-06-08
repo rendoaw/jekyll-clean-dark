@@ -6,8 +6,7 @@ categories: blog
 tags: 
   - openstack
   - openvswitch
-date: 2017-06-02T15:39:55-04:00
-modified: 2017-06-02T14:19:19-04:00
+date: 2017-06-04T15:39:55-04:00
 ---
 
 This is the hack to create a routed (not NAT-ed) virtual network in Openstack with Openvswitch that was installed using PackStack.

@@ -1,4 +1,14 @@
-# Trying CoreOS
+---
+layout: post
+comments: true
+title: "Trying CoreOS"
+categories: blog
+tags: 
+  - coreos
+  - sysadmin
+date: 2016-06-01T15:39:55-04:00
+---
+
 
 ## Overview
 * CoreOS is a lot different compared with other normal Linux distros. 

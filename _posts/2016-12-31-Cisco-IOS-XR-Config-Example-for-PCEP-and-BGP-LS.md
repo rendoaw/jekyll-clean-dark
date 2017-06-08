@@ -1,4 +1,15 @@
-# Cisco IOS-XR Config Example for PCEP and BGP-LS
+---
+layout: post
+comments: true
+title: "Cisco IOS-XR Config Example for PCEP and BGP-LS"
+categories: blog
+tags: 
+  - networking
+  - iosxr
+  - bgp
+date: 2016-12-31T15:39:55-04:00
+---
+
 
 ## Notes
 * if lsp-delegation is enabled globally under mpls traffic-eng -> pce section, looks like all configured LSP will become delegated LSP

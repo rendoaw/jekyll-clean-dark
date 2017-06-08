@@ -1,4 +1,15 @@
-# Trying BGP Monitoring Protocol with OpenBMP
+---
+layout: post
+comments: true
+title: "Trying BGP Monitoring Protocol with OpenBMP"
+categories: blog
+tags: 
+  - bmp
+  - bgp
+  - networking
+  - junos
+date: 2016-06-01T15:39:55-04:00
+---
 
 Some notes during BMP and JunOS testing
 

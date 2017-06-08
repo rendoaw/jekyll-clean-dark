@@ -1,4 +1,14 @@
-# Simple Telegram Bot to Monitor Linux Server
+---
+layout: post
+comments: true
+title: "Simple Telegram Bot to Monitor Linux Server"
+categories: blog
+tags: 
+  - telegram
+  - bot
+  - sysadmin
+date: 2017-02-01T15:39:55-04:00
+---
 
 ## Background
 

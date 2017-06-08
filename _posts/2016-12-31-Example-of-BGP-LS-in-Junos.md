@@ -1,4 +1,14 @@
-# Example of BGP-LS in JunOS
+---
+layout: post
+comments: true
+title: "Example of BGP-LS in JunOS"
+categories: blog
+tags: 
+  - networking
+  - bgp
+  - junos
+date: 2016-12-31T15:39:55-04:00
+---
 
 ## Sample config
 

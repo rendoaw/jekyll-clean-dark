@@ -1,4 +1,13 @@
-# How to automate VM configuration that does not support DHCP and Cloud init
+---
+layout: post
+comments: true
+title: "How to automate VM configuration that does not support DHCP and Cloud init"
+categories: blog
+tags: 
+  - virtualization
+  - sysadmin
+date: 2017-06-01T15:39:55-04:00
+---
 
 In some cases, you want to spawn a VM on OpenStack, but the VM Operating System does not have DHCP client capability and also no cloud-init support. 
 In this case we have to use VNC console to configure the VM, at least to configure basic connectivity e.g: IP address, default gateway, etc

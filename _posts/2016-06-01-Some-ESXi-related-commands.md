@@ -1,4 +1,13 @@
-# Some ESXi related commands
+---
+layout: post
+comments: true
+title: "Some ESXi related commands"
+categories: blog
+tags: 
+  - esxi
+  - sysadmin
+date: 2016-06-01T15:39:55-04:00
+---
 
 * add static route
 

@@ -1,5 +1,13 @@
-
-# Git workflow illustrated
+---
+layout: post
+comments: true
+title: "Git workflow illustrated"
+categories: blog
+tags: 
+  - git
+  - misc
+date: 2017-06-06T15:39:55-04:00
+---
 
 This post illustrates the common Git workflow. I created this especially for my own reference when working with git.
 

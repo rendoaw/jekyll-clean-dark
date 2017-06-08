@@ -1,4 +1,13 @@
-# Automate ssh access on JunOS device using sshpass
+---
+layout: post
+comments: true
+title: "Automate ssh access on JunOS device using sshpass"
+categories: blog
+tags: 
+  - networking
+  - sysadmin
+date: 2017-06-01T15:39:55-04:00
+---
 
 This is an alternative way to mass configuring/accessing multiple devices at once, by using sshpass
 

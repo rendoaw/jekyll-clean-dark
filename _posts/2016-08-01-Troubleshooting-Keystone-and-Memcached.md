@@ -1,4 +1,14 @@
-# Troubleshooting Keystone and Memcached
+---
+layout: post
+comments: true
+title: "Troubleshooting Keystone and Memcached"
+categories: blog
+tags: 
+  - openstack
+  - keystone
+  - sysadmin
+date: 2016-06-01T15:39:55-04:00
+---
 
 * To increase memcache size (example below will set cache size to 2G)
 

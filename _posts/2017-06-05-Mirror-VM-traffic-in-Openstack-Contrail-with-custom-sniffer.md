@@ -1,4 +1,15 @@
-# Mirror VM traffic in Openstack Contrail with custom sniffer
+---
+layout: post
+comments: true
+title: "Mirror VM traffic in Openstack Contrail with custom sniffer"
+categories: blog
+tags: 
+  - openstack
+  - networking
+  - contrail
+date: 2017-06-05T15:39:55-04:00
+---
+
 
 The proper way to mirror VM traffic in Contrail is by using its analyzer VM as documented in 
 * (https://www.juniper.net/documentation/en_US/contrail3.0/topics/task/configuration/configure-traffic-analyzer-vnc.html)

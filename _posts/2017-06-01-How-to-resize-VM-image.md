@@ -1,4 +1,13 @@
-# How to resize VM image
+---
+layout: post
+comments: true
+title: "How to resize VM image"
+categories: blog
+tags: 
+  - sysadmin
+  - virtualization
+date: 2017-06-01T15:39:55-04:00
+---
 
 This is the procedure to resize a VM image that has single flat primary partition.
 
