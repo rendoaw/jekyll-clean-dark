@@ -20,10 +20,10 @@ share:
 
 social:
   github: rendoaw
-  stackoverflow: ''
+  #stackoverflow: ''
   linkedin: rendo
-  instagram: ''
-  lastfm: ''
+  #instagram: ''
+  #lastfm: ''
   rss: feed.xml
 
 # Google Analytics key, leave blank to ignore
