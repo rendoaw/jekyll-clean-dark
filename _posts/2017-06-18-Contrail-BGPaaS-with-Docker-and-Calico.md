@@ -57,7 +57,7 @@ Here is the simplified topology diagram
 
 ## Test Setup
 
-### Openstack + Contrail
+#### Openstack + Contrail
 
 * It is assumed that
     * we have a working Openstack system with Contrail as neutron plugin.
@@ -70,7 +70,7 @@ Here is the simplified topology diagram
 
 
 
-### Docker VM
+#### Docker VM
 
 * For simplicity, we will launch a Centos 7 VM and make it as a docker host. For further reference we will call this VM as *Docker VM*.
 
