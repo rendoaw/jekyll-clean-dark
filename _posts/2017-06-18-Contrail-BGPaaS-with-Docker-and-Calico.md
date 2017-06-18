@@ -3,6 +3,7 @@ layout: post
 comments: true
 title: "Contrail BGPaaS with Docker and Calico"
 categories: blog
+descriptions: This post is the experiment log of using Contrail BGP as a Service to allow routing between external network and a container inside a docker host with Project Calico as the networking plugin.
 tags: 
   - openstack
   - docker
