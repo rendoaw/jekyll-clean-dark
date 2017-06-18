@@ -1,4 +1,4 @@
-Repo for (https://rendoaw.github.io)
+Repo for https://rendoaw.github.io
 
 Theme is cloned from Jekyll Clean Dark
 * Get it from [github](https://github.com/streetturtle/jekyll-clean-dark).
