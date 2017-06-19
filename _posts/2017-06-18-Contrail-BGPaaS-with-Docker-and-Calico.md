@@ -11,14 +11,14 @@ tags:
   - contrail
   - calico
   - virtualization
-date: 2017-06-18T22:39:55-04:00
+date: 2017-06-18T23:39:55-04:00
 ---
 
 This post is the experiment log of using Contrail BGP as a Service to allow routing between external network and a container inside a docker host with Project Calico as the networking plugin.
 
 Here is the simplified topology diagram
 
-`{%
+{% linenos %}
                      Internet
                          +                         +-------------+
                          |                         | vmx gateway |
@@ -53,7 +53,7 @@ Here is the simplified topology diagram
                 | Compute node                               |
                 +--------------------------------------------+
 
-%}`
+{% endhighlight %}
 
 
 ## Test Setup
