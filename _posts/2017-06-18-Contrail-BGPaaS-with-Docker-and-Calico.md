@@ -571,7 +571,7 @@ Here is the simplified topology diagram
         ```
         {% endhighlight %}
 
-        * The above result tell us that both to go to docker VM and container inside docker VM, the next hop is the same. 
+    * The above result tell us that both to go to docker VM and container inside docker VM, the next hop is the same. 
 
 
     * Check where is the next-hop id 90 bring us
@@ -642,10 +642,9 @@ Here is the simplified topology diagram
     ```
     {% endhighlight %}
 
-    * Calico Bird agent in Docker VM advertise the container IP as an aggregated subnet 100.64.100.64/26 to Contrail control node and Contrail control forward it gateway router
-
-        * 100.64.100.64/26 is advertised by 192.168.1.19 which is Contrail control node
-        * the next hop for this route is GRE tunnel gr-0/0/10.32769 is to the Compute node vrouter IP 192.168.1.22
+* Calico Bird agent in Docker VM advertise the container IP as an aggregated subnet 100.64.100.64/26 to Contrail control node and Contrail control forward it gateway router
+    * 100.64.100.64/26 is advertised by 192.168.1.19 which is Contrail control node
+    * the next hop for this route is GRE tunnel gr-0/0/10.32769 is to the Compute node vrouter IP 192.168.1.22
 
 
 * Alternatively, we can also check from the Contrail UI
