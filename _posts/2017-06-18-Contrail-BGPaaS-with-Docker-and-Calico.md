@@ -19,6 +19,7 @@ This post is the experiment log of using Contrail BGP as a Service to allow rout
 Here is the simplified topology diagram
 
 {% highlight linenos %}
+```
                      Internet
                          +                         +-------------+
                          |                         | vmx gateway |
@@ -52,7 +53,7 @@ Here is the simplified topology diagram
                 |   +------------------------------------+   |
                 | Compute node                               |
                 +--------------------------------------------+
-
+```
 {% endhighlight %}
 
 
