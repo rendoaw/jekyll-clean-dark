@@ -146,3 +146,7 @@ p > code,
 .gd { color: $operators; } /* Generic.Deleted & Diff Deleted */
 .gi { color: $names; } /* Generic.Inserted & Diff Inserted */
 .l-Scalar-Plain {color: $names}
+
+pre code {
+    white-space: pre;
+}
