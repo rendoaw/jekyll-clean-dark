@@ -79,22 +79,27 @@ Here is the simplified topology diagram
 * Install docker
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# yum install -y docker
     [root@dockerhost ~]# systemctl start docker
     [root@dockerhost ~]# systemctl enable docker
+    ```
     {% endhighlight %}
 
 * Before we install Calico, we need to install Etcd first
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# yum -y install etcd
     [root@dockerhost ~]# systemctl start etcd
     [root@dockerhost ~]# systemctl enable etcd
+    ```
     {% endhighlight %}
 
 * update docker systemd configuration to add cluster-store information
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# more /usr/lib/systemd/system/docker.service
     [Unit]
     Description=Docker Application Container Engine
@@ -135,11 +140,13 @@ Here is the simplified topology diagram
 
     [Install]
     WantedBy=multi-user.target
+    ```
     {% endhighlight %}
 
 * To install calico on docker, we need to get the calicoctl utility first
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# wget -O /usr/local/bin/calicoctl https://github.com/projectcalico/calicoctl/releases/download/v1.3.0/calicoctl
     --2017-06-18 01:56:25--  https://github.com/projectcalico/calicoctl/releases/download/v1.3.0/calicoctl
     Resolving github.com (github.com)... 192.30.253.113
@@ -158,22 +165,26 @@ Here is the simplified topology diagram
     2017-06-18 01:56:54 (1.07 MB/s) - ‘/usr/local/bin/calicoctl’ saved [31263616/31263616]
 
     [root@dockerhost ~]# chmod +x /usr/local/bin/calicoctl
+    ```
     {% endhighlight %}
 
 * create a calicoctl configuration
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# cat /etc/calico/calicoctl.cfg
     apiVersion: v1
     kind: calicoApiConfig
     metadata:
     spec:
     etcdEndpoints: http://localhost:2379
+    ```
     {% endhighlight %}
 
 * Install Calico as a container
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# calicoctl node run --node-image=quay.io/calico/node:v1.3.0
     Running command to load modules: modprobe -a xt_set ip6_tables
     Enabling IPv4 forwarding
@@ -202,22 +213,26 @@ Here is the simplified topology diagram
     ▽
     [Unit]
     Calico node started successfully
+    ```
     {% endhighlight %}
 
 
 * By default, docker has predefined subnet for the container and it has NAT enabled. 
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# calicoctl get  ipPool --output wide
     CIDR                       NAT     IPIP
     192.168.0.0/16             true    false
     fd80:24e2:f998:72d6::/64   true    false
+    ```
     {% endhighlight %}
 
 
 * The reason of using Calico is to have full native IP connectivity to the container without any translation, so we need to define one.
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# cat ippool.yaml
     apiVersion: v1
     kind: ipPool
@@ -231,16 +246,19 @@ Here is the simplified topology diagram
 
     
     [root@dockerhost ~]# calicoctl create -f ippool.yaml
+    ```
     {% endhighlight %}
 
 * lets check the IP Pool again
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# calicoctl get  ipPool --output wide
     CIDR                       NAT     IPIP
     100.64.100.0/24            false   false
     192.168.0.0/16             true    false
     fd80:24e2:f998:72d6::/64   true    false
+    ```
     {% endhighlight %}
 
 * OK, now we have new subnet with NAT disabled. For now, we don't care about IPIP mode.
@@ -248,13 +266,16 @@ Here is the simplified topology diagram
 * Next step is to create virtual network to attach the container. Let's call the virtual network name as *net1*.
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# docker network create --driver calico --ipam-driver calico-ipam net1 --subnet 100.64.100.0/24
     29889d26ca1c12f842fbe819821680c4e32dd97201fa097f1877313565b0a44c
+    ```
     {% endhighlight %}
 
 * Similar with Openstack neutron, Calico by default only allow outgoing traffic. For this experiment i want to allow everything in and out, so we need to define a new policy.
 
     {% highlight linenos %}
+    ```
     # cat policy1.yaml
     - apiVersion: v1
     kind: profile
@@ -280,6 +301,7 @@ Here is the simplified topology diagram
 
     [root@dockerhost ~]# calicoctl apply -f policy1.yaml
     Successfully applied 1 'profile' resource(s)
+    ```
     {% endhighlight %}
 
 * The policy above is kind of an ugly policy because it will applied for any container network that manage by Calico. 
@@ -289,14 +311,17 @@ Here is the simplified topology diagram
 * Verify the policy
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# etcdctl get /calico/v1/policy/profile/net1/rules
     {"inbound_rules":[{"action":"allow","protocol":"tcp"},{"action":"allow","protocol":"udp"},{"action":"allow","protocol":"icmp"}],"outbound_rules":[{"action":"allow","protocol":"tcp"},{"action":"allow","protocol":"udp"},{"action":"allow","protocol":"icmp"}]}
+    ```
     {% endhighlight %}
 
 
 * Next one is configuring BGP peering between the Docker VM and Contrail to advertise the Container IP to external network.
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# calicoctl config set asNumber 65000
     [root@dockerhost ~]# cat bgp.yaml
     apiVersion: v1
@@ -308,6 +333,7 @@ Here is the simplified topology diagram
     asNumber: 64512
     [root@dockerhost ~]# calicoctl create -f bgp.yaml
     Successfully created 1 'bgpPeer' resource(s)
+    ```
     {% endhighlight %}
 
 * We also need to go back to Contail UI to configure BGP peering to Calico Bird daemon inside Docker VM
@@ -318,6 +344,7 @@ Here is the simplified topology diagram
 * Verify the BGP peer setting
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# calicoctl get bgpPeer --scope=global
     SCOPE    PEERIP       NODE   ASN
     global   100.64.1.1          64512
@@ -334,12 +361,14 @@ Here is the simplified topology diagram
 
     IPv6 BGP status
     No IPv6 peers found.
+    ```
     {% endhighlight %}
 
 
 * Launch a container and attach it to *net1* virtual network. For this exercise, i am using centos+sshd docker image from docker hub, created by *interface/centos-ssh*
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# docker run -d --name centos-ssh  --net=net1 --restart=always lnterface/centos-ssh
     Unable to find image 'lnterface/centos-ssh:latest' locally
     Trying to pull repository docker.io/lnterface/centos-ssh ...
@@ -355,21 +384,25 @@ Here is the simplified topology diagram
     f22026c1b943: Pull complete
     Digest: sha256:e33d206da8cb3c267eb1f5073c8a84a3d17adf74f6d7c5a25d9db2bc751f995c
     367e947d421ccc5b0d0d691e4e415f7e6cdc5bad7282ce10bafcaf2f2df07760
+    ```
     {% endhighlight %}
 
 * Make sure the container is running
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# docker ps
     CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS                 PORTS               NAMES
     367e947d421c        lnterface/centos-ssh          "/usr/sbin/sshd -D"      6 seconds ago       Up 3 seconds                               centos-ssh
     ...deleted...
     0cc29c917a7b        quay.io/calico/node:v1.3.0    "start_runit"            6 hours ago         Up 6 hours                                 calico-node
+    ```
     {% endhighlight %}
 
 * Find the IP of the container
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# docker inspect centos-ssh | egrep -i "network|ip"
                 "NetworkMode": "net1",
                 "IpcMode": "",
@@ -391,6 +424,7 @@ Here is the simplified topology diagram
                         "IPv6Gateway": "",
                         "GlobalIPv6Address": "",
                         "GlobalIPv6PrefixLen": 0,
+    ```
     {% endhighlight %}
 
 * OK, the container IP is *100.64.100.71*
@@ -401,6 +435,7 @@ Here is the simplified topology diagram
 * Let see if we can ping the container from the test PC -- WORKS!
 
     {% highlight linenos %}
+    ```
     earth:~ rendo$ ping -c 3 100.64.100.71
     PING 100.64.100.71 (100.64.100.71): 56 data bytes
     64 bytes from 100.64.100.71: icmp_seq=0 ttl=60 time=6.478 ms
@@ -418,11 +453,13 @@ Here is the simplified topology diagram
     3  100.64.0.2  2.211 ms  2.068 ms  2.535 ms
     4  * * *
     5  100.64.100.71  4.083 ms  3.534 ms  3.219 ms
+    ```
     {% endhighlight %}
 
 * we can also try to ssh into the container
 
     {% highlight linenos %}
+    ```
     earth:~ rendo$ ssh root@100.64.100.71
     Warning: Permanently added '100.64.100.71' (ECDSA) to the list of known hosts.
     root@100.64.100.71's password:
@@ -430,11 +467,13 @@ Here is the simplified topology diagram
     /root
     [root@367e947d421c ~]# id
     uid=0(root) gid=0(root) groups=0(root)
+    ```
     {% endhighlight %}
 
 * Let's also ping from the container to test PC -- WORKS!
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# docker exec -it centos-ssh /bin/bash
     [root@367e947d421c /]# ping -c 3 192.168.1.142
     PING 192.168.1.142 (192.168.1.142) 56(84) bytes of data.
@@ -455,11 +494,13 @@ Here is the simplified topology diagram
     4  100.64.0.1  574.424 ms  574.329 ms  574.312 ms
     5  192.168.1.142  17.791 ms  17.619 ms  17.368 ms
     [root@367e947d421c /]# [root@dockerhost ~]#
+    ```
     {% endhighlight %}
 
 * Let's go deeper. Let's check Docker VM IP configuration
 
     {% highlight linenos %}
+    ```
     [root@dockerhost ~]# ip a
     ...deleted..
     2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
@@ -478,6 +519,7 @@ Here is the simplified topology diagram
         link/ether 5a:04:3b:d6:c3:2b brd ff:ff:ff:ff:ff:ff link-netnsid 1
         inet6 fe80::5804:3bff:fed6:c32b/64 scope link
         valid_lft forever preferred_lft forever
+    ```
     {% endhighlight %}
 
 
@@ -491,26 +533,31 @@ Here is the simplified topology diagram
     * Find the next hop table for contrail *public* virtual network
 
         {% highlight linenos %}
+        ```
         root@compute01:~# vxlan --get 4         -----> 4 is the vxlan id we get from the previous step
         VXLAN Table
 
         VNID    NextHop
         ----------------
             4    14                             ------> next-hop table id is 14
+        ```
         {% endhighlight %}
 
     * Find the VRF for this virtual network
 
         {% highlight linenos %}
+        ```
         root@compute01:~# nh --get 14
         Id:14         Type:Vrf_Translate  Fmly: AF_INET  Rid:0  Ref_cnt:2          Vrf:1
                     Flags:Valid, Vxlan, Unicast Flood,
                     Vrf:1                       -------> vrf id is 1
+        ```
         {% endhighlight %}
 
     * Dump the routing table, we specifically interested in container IP 100.64.100.71
 
         {% highlight linenos %}
+        ```
         root@compute01:~# rt --dump 1 | more
         Flags: L=Label Valid, P=Proxy ARP, T=Trap ARP, F=Flood ARP
         vRouter inet4 routing table 0/1/unicast
@@ -521,6 +568,7 @@ Here is the simplified topology diagram
        
         ..deleted..
         100.64.100.71/32       26                       -             90        -               -------> to go to container IP, we should look up next-hop id 90
+        ```
         {% endhighlight %}
 
         * The above result tell us that both to go to docker VM and container inside docker VM, the next hop is the same. 
@@ -529,16 +577,19 @@ Here is the simplified topology diagram
     * Check where is the next-hop id 90 bring us
 
         {% highlight linenos %}
+        ```
         root@compute01:~# nh --get 90
         Id:90         Type:Encap          Fmly: AF_INET  Rid:0  Ref_cnt:263        Vrf:1        -------> nh id 90 is going to locally attached VM interface with id 37
                     Flags:Valid, Policy,
                     EncapFmly:0806 Oif:37 Len:14
                     Encap Data: 02 c7 80 7e 22 f2 00 00 5e 00 01 00 08 00
+        ```
         {% endhighlight %}
 
     * Find the tap interface that connect to docker VM. This is useful if we want to sniff the traffic to Docker VM
 
         {% highlight linenos %}
+        ```
         root@compute01:~# vif --get 37
         Vrouter Interface Table
 
@@ -554,12 +605,14 @@ Here is the simplified topology diagram
                     RX packets:210872  bytes:15967444 errors:0
                     TX packets:328042  bytes:568026520 errors:0
                     Drops:43
+        ```
         {% endhighlight %}
 
 
 * We also want to check if the container IP is advertised to gateway router
 
     {% highlight linenos %}
+    ```
     rw@gw-01> show route 100.64.100.71
 
     inet.0: 12 destinations, 13 routes (12 active, 0 holddown, 0 hidden)
@@ -586,7 +639,7 @@ Here is the simplified topology diagram
         Source address: 192.168.1.22
         Next hop: gr-0/0/10.32769
         State: Up
-
+    ```
     {% endhighlight %}
 
     * Calico Bird agent in Docker VM advertise the container IP as an aggregated subnet 100.64.100.64/26 to Contrail control node and Contrail control forward it gateway router
