@@ -384,7 +384,7 @@ Calicoctl is a utility to manage Calico plugin.
 * From the output above, we can see that 2 system containers were installed on worker node. Those containers are kube-proxy and calico-node. 
 
 
-If everything looks OK, let's check the setup in more detail. I'll cover this in the next post [2017-10-20-Calico-and-Kubernetes-part-2.md]
+If everything looks OK, let's check the setup in more detail. I'll cover this in the next post [Calico and Kubernetes part 2](2017-10-20-Calico-and-Kubernetes-part-2.md)
 
 
 
