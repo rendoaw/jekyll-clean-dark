@@ -384,6 +384,24 @@ Calicoctl is a utility to manage Calico plugin.
 * From the output above, we can see that 2 system containers were installed on worker node. Those containers are kube-proxy and calico-node. 
 
 
+If everything looks OK, let's check the setup in more detail. I'll cover this in the next post [2017-10-20-Calico-and-Kubernetes-part-2.md]
 
-If everything looks OK, let's check the setup in more detail. I'll cover this in the next post.
+
+
+
+### MISC
+
+* As a side node, kubeadm init, for some reason does not accept prefix smaller than /24. 
+    * In separate attempt, i tried to run init with /25 prefix, and one of the container keep crashing
+    * Sample output
+    
+        ```
+        ubuntu@ubuntu-4:~$ kubectl get pods --all-namespaces -o wide
+        NAMESPACE     NAME                               READY     STATUS             RESTARTS   AGE       IP            NODE
+        kube-system   etcd-ubuntu-4                      1/1       Running            0          17s       100.64.1.23   ubuntu-4
+        kube-system   kube-apiserver-ubuntu-4            1/1       Running            0          9s        100.64.1.23   ubuntu-4
+        kube-system   kube-controller-manager-ubuntu-4   0/1       CrashLoopBackOff   3          1m        100.64.1.23   ubuntu-4
+        kube-system   kube-scheduler-ubuntu-4            1/1       Running            0          11s       100.64.1.23   ubuntu-4    
+        ```
+
 
