@@ -16,9 +16,23 @@ date: 2017-10-20T22:39:55-04:00
 ## Overview
 
 This is the first part of Kubernetes with Project Calico as the networking plugin blog series.
-The main driver for this experiment is to know in detail how is the IP traffic flow works inside K8S with Calico as networking plugin.
+The main driver for this experiment is to know in detail how is the packet flow works inside K8S with Calico as networking plugin.
 
-Since i did need to create and destroy the cluster several time to test different scenario, I'll start with documenting how to setup a multi-nodes k8s cluster using kubeadm. 
+I'll split the post into the following
+
+* Part 1
+	* This part will cover the steps to quickly setup the lab environment and get the k8s+Calico works. 
+	* This is useful when we need to create and destroy the cluster several time to test different scenario
+	* If you have existing k8s cluster with Calico already, then nothing special here
+
+* Part 2
+	* This part will focus on Calico IP address allocation and traffic flow between one container to the other container.
+	* To jump to part to, you can go to [Kubernetes and Calico Part 2](2017-10-20-Calico-and-Kubernetes-part-2.md)
+
+* Part 3
+	* This part will focus on how to establish connectivity between container and external world.
+	* To jump to part to, you can go to [Kubernetes and Calico Part 3](2017-10-20-Calico-and-Kubernetes-part-3.md)
+
 
 
 ## Installation and Configuration
@@ -150,7 +164,7 @@ Follow https://kubernetes.io/docs/setup/independent/install-kubeadm/
     kube-system   kube-scheduler-ubuntu-4            1/1       Running   0          19m       100.64.1.23   ubuntu-4
     ```
 
-* I believe it is ok for kube-dns to be pending. It will be up once we configure the networking part.
+* I believe it is ok for kube-dns to be pending. It will be up once we configure the networking part and have the first container created.
 
 
 
@@ -392,7 +406,7 @@ If everything looks OK, let's check the setup in more detail. I'll cover this in
 ### MISC
 
 * As a side node, kubeadm init, for some reason does not accept prefix smaller than /24. 
-    * In separate attempt, i tried to run init with /25 prefix, and one of the container keep crashing
+    * I was curious about what is the smallest prefix to run kubeadm init, so i tried to run init with /25 prefix, and one of the container keep crashing
     * Sample output
     
         ```
@@ -405,3 +419,9 @@ If everything looks OK, let's check the setup in more detail. I'll cover this in
         ```
 
 
+
+
+
+## Links
+* [Kubernetes and Calico Part 2](2017-10-20-Calico-and-Kubernetes-part-2.md)
+* [Kubernetes and Calico Part 2](2017-10-20-Calico-and-Kubernetes-part-3.md)
