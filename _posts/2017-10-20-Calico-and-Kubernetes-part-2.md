@@ -739,10 +739,10 @@ The following diagram is similar as the one in step 1 but added with actual subn
 OK, now we have more insight how the IP allocation works and know there are different behavior can be configured for different IP Pool. 
 
 
-I'll continue with connectivity between the container and the external network in the next post here: [Kubernetes and Calico Part 3](2017-10-21-Calico-and-Kubernetes-part-3.md)
+I'll continue with connectivity between the container and the external network in the next post here: [Kubernetes and Calico Part 3](Calico-and-Kubernetes-part-3)
 
 
 
 ## Links
-* [Kubernetes and Calico Part 1](2017-10-20-Calico-and-Kubernetes-part-1.md)
-* [Kubernetes and Calico Part 3](2017-10-21-Calico-and-Kubernetes-part-3.md)
+* [Kubernetes and Calico Part 1](Calico-and-Kubernetes-part-1)
+* [Kubernetes and Calico Part 3](Calico-and-Kubernetes-part-3)
