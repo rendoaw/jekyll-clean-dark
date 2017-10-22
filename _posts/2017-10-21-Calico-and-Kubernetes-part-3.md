@@ -14,6 +14,8 @@ date: 2017-10-21T23:39:55-04:00
 ---
 
 
+## Overview
+
 In general, container can communicate with external network in this k8s + Calico scenario:
 * the first opton is by doing NAT on the k8s node
     * This is the "default" behavior. Any outgoing traffic from the container is SNAT by the node/host. 
@@ -48,7 +50,81 @@ The definition of "external network" here is whatever the k8s node uplink connec
         * Contrail BGPaaS and Calico has been briefly covered in [Contrail BGPaaS with Docker and Calico](2017-06-18-Contrail-BGPaaS-with-Docker-and-Calico.md)
 
 
-### Establish BGP Peering between each k8s node to Contrail control node
+## Target topology
+
+The following diagram is similar as the one in step 2.
+
+```
+                     Internet
+                         +                         
+                         |                        +-------------+ 
+                   +---------------+              | vmx gateway | 
+                   | Internet GW   |              |             | 
+                   +---------------+              +-------------+ 
+             192.168.1.1 |                                 | 192.168.1.22 
+                         |                                 |
+   +---+-----------------+--------------+------------------+-------------------------------------------------------------------+--------+
+       |                                |                                                                                      |
+192.168.1.19                       192.168.1.18                                                                         192.168.1.142
+       |                                |                                                                                      |
+       |                                |                                                                                      |
+  +----+----+   +------------------------------------------------------------------------------------------------+        +----+-------+
+  |Contrail |   |                       |                                                                        |        |  Test PC   |
+  |Control  |   |                     vrouter                                                                    |        |            |
+  +---------+   |                       |                                                                        |        +------------+
+                |                       |               openstack net1 100.64.1.0/24                             | 
+                |    +-------+----------+------------------------------------------------------------------+     |
+                |            |                                              |                                    |
+                |            |                                              |                                    |
+                |       100.64.1.23  ubuntu-4 k8s node                 100.64.1.24  ubuntu-3 k8s node            |
+                |      +-----+------------------------------+         +-----+------------------------------+     |
+                |      |     |                              |         |     |                              |     |
+                |      |     |     10.201.0.192/26          |         |     |     10.201.0.128/26          |     |
+                |      |   +-+----------------+--------+    |         |   +-+----------------+--------+    |     |
+                |      |     |                |             |         |     |                |             |     |
+                |      |     |           .196 |             |         |     |           .130 |             |     |
+                |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
+                |      |     |     |                 |      |         |     |     |                 |      |     |
+                |      |     |     |  container 11   |      |         |     |     |  container 21   |      |     |
+                |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
+                |      |     |                              |         |     |                              |     |
+                |      |     |                              |         |     |                              |     |
+                |      |     |     10.91.2.0/26             |         |     |       10.91.1.128/26         |     |
+                |      |   +-+----------------+--------+    |         |   +-+----------------+--------+    |     |
+                |      |     |                |             |         |     |                |             |     |
+                |      |     |             .0 |             |         |     |           .128 |             |     |
+                |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
+                |      |     |     |                 |      |         |     |     |                 |      |     |
+                |      |     |     |  container 12   |      |         |     |     |  container 22   |      |     |
+                |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
+                |      |                                    |         |                                    |     |
+                |      |                                    |         |                                    |     |
+                |      +------------------------------------+         +------------------------------------+     |
+                |                                                                                                |
+                | Compute node                                                                                   |
+                +------------------------------------------------------------------------------------------------+
+
+```
+
+### Components
+
+* k8s node 1: 
+	* IP: 100.64.1.23
+	* hostname: ubuntu-4
+	* role: k8s master and worker node
+* k8s node 2: 
+	* IP: 100.64.1.24
+	* hostname: ubuntu-3
+	* role: worker node
+
+* Notes:
+	Although my test setup will have k8s nodes running as a VM on top of Openstack, it is not a mandatory requirement. You can have k8s on baremetal and directly connected to physical L2/L3 switches.
+
+
+
+## Establish BGP Peering between each k8s node to Contrail control node
+
+### Setup the connection
 
 * on k8s side, use calictl to configure new BGP peering
 
@@ -154,6 +230,8 @@ The definition of "external network" here is whatever the k8s node uplink connec
         No IPv6 peers found.
         ```
 
+
+### Verify the packet flow
 
 * Verify if container subnets are already received by MX gateway
 
@@ -265,6 +343,8 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
     * Hmm, ping fail!
 
 
+## Why container in ubuntu-3 can't communicate with external network ?
+
 ### Troubleshoot connectivity to container in node 2: ubuntu-3
 
 * Check the route on mx gateway again. 
@@ -325,6 +405,9 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
     * 10.91.1.128 point to next hop interface gr-0/0/10.32769 which is going to 192.168.1.18.
         * 192.168.1.18 is the IP of compute node where the k8s VM node is hosted.
 
+
+
+### Is it a routing problem ?
 
 * Verify routing table from Contrail control node 
 
@@ -402,6 +485,9 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
 
     * Looks good. Nothing wrong.
     
+    
+### Is it a firewall problem ?
+
 * Maybe it is a firewall. Let's check IPTable
 
     ```
@@ -440,6 +526,9 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
         * incoming: mx gateway -> compute-1 -> ubuntu-4 node -(IPIP)-> ubuntu-3 node -> container 10.91.1.128
         * outgoing: container 10.91.1.128 -> ubuntu-3 node -> compute-1 -> mx gateway
 
+
+### or it is something else ?
+
 * Let's disable reverse path filtering
 
     ```
@@ -450,7 +539,9 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
     root@ubuntu-3:/home/ubuntu# 
     ```
     
-    * Yap, that's it. Now ping works
+    * Yap, that's it !!!!
+    
+    * Now ping works
     
         ```
         rw@gw-01> ping count 3 10.91.1.128 
@@ -473,4 +564,8 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
         rw@gw-01>         
         ```
         
-... to be continue        
+
+## Links
+* [Kubernetes and Calico Part 1](2017-10-20-Calico-and-Kubernetes-part-1.md)
+* [Kubernetes and Calico Part 2](2017-10-20-Calico-and-Kubernetes-part-2.md)
+
