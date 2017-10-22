@@ -492,5 +492,5 @@ If everything looks OK, let's check the setup in more detail. I'll cover this in
 
 
 ## Links
-* [Kubernetes and Calico Part 2](2017-10-20-Calico-and-Kubernetes-part-2.md)
-* [Kubernetes and Calico Part 3](2017-10-21-Calico-and-Kubernetes-part-3.md)
+* [Kubernetes and Calico Part 2](Calico-and-Kubernetes-part-2)
+* [Kubernetes and Calico Part 3](Calico-and-Kubernetes-part-3)
