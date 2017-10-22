@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title: "Calico and Kubernetes - Part 2 - Setup"
+title: "Calico and Kubernetes - Part 2 - IP Pool and Intra Cluster Connectivity"
 categories: blog
 descriptions: This is the 2nd part of Kubernetes with Project Calico as the networking plugin blog series.
 tags: 
