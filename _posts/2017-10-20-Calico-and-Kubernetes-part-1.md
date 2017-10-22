@@ -27,11 +27,11 @@ I'll split the post into the following
 
 * Part 2
 	* This part will focus on Calico IP address allocation and traffic flow between one container to the other container.
-	* To jump to part to, you can go to [Kubernetes and Calico Part 2](2017-10-20-Calico-and-Kubernetes-part-2.md)
+	* To jump to part to, you can go to [Kubernetes and Calico Part 2](Calico-and-Kubernetes-part-2)
 
 * Part 3
 	* This part will focus on how to establish connectivity between container and external world.
-	* To jump to part to, you can go to [Kubernetes and Calico Part 3](2017-10-20-Calico-and-Kubernetes-part-3.md)
+	* To jump to part to, you can go to [Kubernetes and Calico Part 3](Calico-and-Kubernetes-part-3)
 
 
 
@@ -467,7 +467,7 @@ Calicoctl is a utility to manage Calico plugin.
 * From the output above, we can see that 2 system containers were installed on worker node. Those containers are kube-proxy and calico-node. 
 
 
-If everything looks OK, let's check the setup in more detail. I'll cover this in the next post [Calico and Kubernetes part 2](2017-10-20-Calico-and-Kubernetes-part-2.md)
+If everything looks OK, let's check the setup in more detail. I'll cover this in the next post [Calico and Kubernetes part 2](Calico-and-Kubernetes-part-2)
 
 
 
