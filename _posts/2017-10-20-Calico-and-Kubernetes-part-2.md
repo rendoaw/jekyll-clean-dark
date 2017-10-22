@@ -3,7 +3,7 @@ layout: post
 comments: true
 title: "Calico and Kubernetes - Part 2 - IP Pool and Intra Cluster Connectivity"
 categories: blog
-descriptions: This is the 2nd part of Kubernetes with Project Calico as the networking plugin blog series.
+descriptions: This is the 2nd part of Kubernetes with Project Calico as the networking plugin blog series. This post will focus on IP address assignemnt and container to container connectivity.
 tags: 
   - kubernetes
   - docker
@@ -14,21 +14,82 @@ date: 2017-10-20T23:39:55-04:00
 ---
 
 
+## Overview
+
 In this part 2, let's inspect our existing k8s setup in more detail especially from IP address alocation point of view. 
 
-After finishing the 1st part, we should have 2 nodes k8s cluster as the following:
-* node 1: k8s master + worker
-    * for further reference, in my setup, the hostname for node 1 is "ubuntu-4"
-    * ubuntu-4 host IP is 100.64.1.23
-* node 2: k8s worker
-    * for further reference, in my setup, the hostname for node 2 is "ubuntu-3"
-    * ubuntu-3 host IP is 100.64.1.24
+
+## Target topology
+
+```
+                     Internet
+                         +                         
+                         |                        +-------------+ 
+                   +---------------+              | vmx gateway | 
+                   | Internet GW   |              |             | 
+                   +---------------+              +-------------+ 
+             192.168.1.1 |                                 | 192.168.1.22 
+                         |                                 |
+   +---+-----------------+--------------+------------------+-------------------------------------------------------------------+--------+
+       |                                |                                                                                      |
+192.168.1.19                       192.168.1.18                                                                         192.168.1.142
+       |                                |                                                                                      |
+       |                                |                                                                                      |
+  +----+----+   +------------------------------------------------------------------------------------------------+        +----+-------+
+  |Contrail |   |                       |                                                                        |        |  Test PC   |
+  |Control  |   |                     vrouter                                                                    |        |            |
+  +---------+   |                       |                                                                        |        +------------+
+                |                       |               openstack net1 100.64.1.0/24                             | 
+                |    +-------+----------+------------------------------------------------------------------+     |
+                |            |                                              |                                    |
+                |            |                                              |                                    |
+                |       100.64.1.23  ubuntu-4 k8s node                 100.64.1.24  ubuntu-3 k8s node            |
+                |      +-----+------------------------------+         +-----+------------------------------+     |
+                |      |     |                              |         |     |                              |     |
+                |      |     |          subnet1a            |         |     |          subnet1b            |     |
+                |      |   +-+----------------+--------+    |         |   +-+----------------+--------+    |     |
+                |      |     |                |             |         |     |                |             |     |
+                |      |     |                |             |         |     |                |             |     |
+                |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
+                |      |     |     |                 |      |         |     |     |                 |      |     |
+                |      |     |     |  container 11   |      |         |     |     |  container 21   |      |     |
+                |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
+                |      |     |                              |         |     |                              |     |
+                |      |     |                              |         |     |                              |     |
+                |      |     |          subnet2a            |         |     |          subnet2b            |     |
+                |      |   +-+----------------+--------+    |         |   +-+----------------+--------+    |     |
+                |      |     |                |             |         |     |                |             |     |
+                |      |     |                |             |         |     |                |             |     |
+                |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
+                |      |     |     |                 |      |         |     |     |                 |      |     |
+                |      |     |     |  container 12   |      |         |     |     |  container 22   |      |     |
+                |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
+                |      |                                    |         |                                    |     |
+                |      |                                    |         |                                    |     |
+                |      +------------------------------------+         +------------------------------------+     |
+                |                                                                                                |
+                | Compute node                                                                                   |
+                +------------------------------------------------------------------------------------------------+
+
+```
+
+### Components
+
+* k8s node 1: 
+	* IP: 100.64.1.23
+	* hostname: ubuntu-4
+	* role: k8s master and worker node
+* k8s node 2: 
+	* IP: 100.64.1.24
+	* hostname: ubuntu-3
+	* role: worker node
+
+* Notes:
+	Although my test setup will have k8s nodes running as a VM on top of Openstack, it is not a mandatory requirement. You can have k8s on baremetal and directly connected to physical L2/L3 switches.
 
 
-Note:
-Please apologize for the IP and hostname that not in the correct order. This is because both ubuntu-4 and ubuntu-3 are actually VM on top of OpenStack with Contrail. 
-This setup is on purpose because at the end i am going to show the traffic flow from outside network to the container via OpenStack with Contrail and then Kubernetes with Calico.
 
+## Add more stuff on existing setup
 
 ### Let's bring up 2 more containers
 
@@ -62,7 +123,9 @@ This setup is on purpose because at the end i am going to show the traffic flow 
 
 
 
-### Node networking setup
+## Verify k8s node networking setup
+
+### Find out k8s node networking setup
 
 * Based on theory, we should have the following:
 
@@ -204,7 +267,7 @@ This setup is on purpose because at the end i am going to show the traffic flow 
 
     
 
-### Network setup inside container
+### Find out how the network is setup is inside container
 
 * Let's go inside the container. 
 
@@ -307,7 +370,7 @@ This setup is on purpose because at the end i am going to show the traffic flow 
     * Woa, the container can access the internet!
 
 
-### WAIT, something seems not right
+### WAIT, something looks suspicious
 
 * We have not configure any route from outside network to the container, how come the container can access internet and do apt-get?
 
@@ -354,7 +417,7 @@ This setup is on purpose because at the end i am going to show the traffic flow 
 
 
 
-### BUT .... i though the intention of using Calico instead of flannel is to have full end-to-end routing to each container without any NAT?
+## BUT .... i though the intention of using Calico instead of flannel is to have full end-to-end routing to each container without any NAT?
 
 * Yes, but on that purpose either we need to disable NAT on default IP Pool, or we can create a new Pool with NAT disabled
 
@@ -534,7 +597,7 @@ This setup is on purpose because at the end i am going to show the traffic flow 
 * Great, the POD now is using new Pool. We can go to inside he new pod, and do some ping to outside network and they will fail because this pool is not NATed.
 
 
-### What will happen with the other new IP Pool that only have /26 subnet size.
+## Just curious, what will happen with the other new IP Pool that only have /26 subnet size.
 
 * Remember that we also create a second new IP Pool with /26 subnet size. In theory, if Calico split the IP Pool with /26 each, then in this case, only one node can have container with second new IP pool range (10.91.2.0/26). 
 
@@ -674,6 +737,10 @@ This setup is on purpose because at the end i am going to show the traffic flow 
 OK, now we have more insight how the IP allocation works and know there are different behavior can be configured for different IP Pool. 
 
 
-I'll continue with connectivity between the container and the external network in the next pod.
+I'll continue with connectivity between the container and the external network in the next post here: [Kubernetes and Calico Part 3](2017-10-21-Calico-and-Kubernetes-part-3.md)
 
 
+
+## Links
+* [Kubernetes and Calico Part 1](2017-10-20-Calico-and-Kubernetes-part-1.md)
+* [Kubernetes and Calico Part 3](2017-10-21-Calico-and-Kubernetes-part-3.md)
