@@ -89,6 +89,18 @@ I'll split the post into the following
 
 ```
 
+### Components
+
+* k8s node 1: 
+	* IP: 100.64.1.23
+	* hostname: ubuntu-4
+	* role: k8s master and worker node
+* k8s node 2: 
+	* IP: 100.64.1.24
+	* hostname: ubuntu-3
+	* role: worker node
+
+
 ## Installation and Configuration
 
 There are many ways to setup K8S cluster. For this activity i am choosing Kubeadm because it seems the simplest way of creating multi-nodes k8s cluster, regardless we will run k8s on baremetal or VM.
