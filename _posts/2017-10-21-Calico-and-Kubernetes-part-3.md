@@ -501,7 +501,7 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
     ```
     root@ubuntu-3:/home/ubuntu# sysctl -a | grep rp_filter
     net.ipv4.conf.all.arp_filter = 0
-    net.ipv4.conf.all.rp_filter = 0
+    net.ipv4.conf.all.rp_filter = 1
     net.ipv4.conf.cali06827901978.arp_filter = 0
     net.ipv4.conf.cali06827901978.rp_filter = 1
     net.ipv4.conf.cali90490b35e30.arp_filter = 0
