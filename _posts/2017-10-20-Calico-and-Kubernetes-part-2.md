@@ -21,6 +21,8 @@ In this part 2, let's inspect our existing k8s setup in more detail especially f
 
 ## Target topology
 
+The following diagram is similar as the one in step 1 but added with actual subnet and container IP.
+
 ```
                      Internet
                          +                         
@@ -46,20 +48,20 @@ In this part 2, let's inspect our existing k8s setup in more detail especially f
                 |       100.64.1.23  ubuntu-4 k8s node                 100.64.1.24  ubuntu-3 k8s node            |
                 |      +-----+------------------------------+         +-----+------------------------------+     |
                 |      |     |                              |         |     |                              |     |
-                |      |     |          subnet1a            |         |     |          subnet1b            |     |
+                |      |     |     10.201.0.192/26          |         |     |     10.201.0.128/26          |     |
                 |      |   +-+----------------+--------+    |         |   +-+----------------+--------+    |     |
                 |      |     |                |             |         |     |                |             |     |
-                |      |     |                |             |         |     |                |             |     |
+                |      |     |           .196 |             |         |     |           .130 |             |     |
                 |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
                 |      |     |     |                 |      |         |     |     |                 |      |     |
                 |      |     |     |  container 11   |      |         |     |     |  container 21   |      |     |
                 |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
                 |      |     |                              |         |     |                              |     |
                 |      |     |                              |         |     |                              |     |
-                |      |     |          subnet2a            |         |     |          subnet2b            |     |
+                |      |     |     10.91.2.0/26             |         |     |       10.91.1.128/26         |     |
                 |      |   +-+----------------+--------+    |         |   +-+----------------+--------+    |     |
                 |      |     |                |             |         |     |                |             |     |
-                |      |     |                |             |         |     |                |             |     |
+                |      |     |             .0 |             |         |     |           .128 |             |     |
                 |      |     |     +-----------------+      |         |     |     +-----------------+      |     |
                 |      |     |     |                 |      |         |     |     |                 |      |     |
                 |      |     |     |  container 12   |      |         |     |     |  container 22   |      |     |
