@@ -100,6 +100,9 @@ I'll split the post into the following
 	* hostname: ubuntu-3
 	* role: worker node
 
+* Notes:
+	Although my test setup will have k8s nodes running as a VM on top of Openstack, it is not a mandatory requirement. You can have k8s on baremetal and directly connected to physical L2/L3 switches.
+
 
 ## Installation and Configuration
 
