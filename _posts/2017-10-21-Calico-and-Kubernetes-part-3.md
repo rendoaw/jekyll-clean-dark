@@ -47,7 +47,7 @@ The definition of "external network" here is whatever the k8s node uplink connec
     * this is what i have in my test setup, each k8s node here is a VM inside Openstack with Contrail as networking plugin
     * In our case, each k8s node need to advertise its container prefix(es) to Contrail via BGP.
     * Fortunately, Contrail does have BGP as a service feature. 
-        * Contrail BGPaaS and Calico has been briefly covered in [Contrail BGPaaS with Docker and Calico](2017-06-18-Contrail-BGPaaS-with-Docker-and-Calico.md)
+        * Contrail BGPaaS and Calico has been briefly covered in [Contrail BGPaaS with Docker and Calico](Contrail-BGPaaS-with-Docker-and-Calico)
 
 
 ## Target topology
@@ -180,7 +180,7 @@ The following diagram is similar as the one in step 2.
     * Add new peer, and fill in all the necessart input.
     * Verify the new BGP peering on contrail 
         * go to Monitor -> Infrastructure -> Control nodes -> select the control node
-    * More detailed steps to configure and verify BGP on Contrail side can be found in the previous post about [Contrail BGPaaS with Docker and Calico](2017-06-18-Contrail-BGPaaS-with-Docker-and-Calico.md)
+    * More detailed steps to configure and verify BGP on Contrail side can be found in the previous post about [Contrail BGPaaS with Docker and Calico](Contrail-BGPaaS-with-Docker-and-Calico)
         
 
 * Verify BGP Peering status from each node
@@ -566,6 +566,6 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
         
 
 ## Links
-* [Kubernetes and Calico Part 1](2017-10-20-Calico-and-Kubernetes-part-1.md)
-* [Kubernetes and Calico Part 2](2017-10-20-Calico-and-Kubernetes-part-2.md)
+* [Kubernetes and Calico Part 1](Calico-and-Kubernetes-part-1)
+* [Kubernetes and Calico Part 2](Calico-and-Kubernetes-part-2)
 
