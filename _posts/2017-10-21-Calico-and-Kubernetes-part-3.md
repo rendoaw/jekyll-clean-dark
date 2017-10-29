@@ -568,4 +568,5 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
 ## Links
 * [Kubernetes and Calico Part 1](Calico-and-Kubernetes-part-1)
 * [Kubernetes and Calico Part 2](Calico-and-Kubernetes-part-2)
+* [Kubernetes and Calico Part 4](Calico-and-Kubernetes-part-4)
 
