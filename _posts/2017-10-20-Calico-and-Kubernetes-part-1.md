@@ -487,8 +487,28 @@ If everything looks OK, let's check the setup in more detail. I'll cover this in
         kube-system   kube-scheduler-ubuntu-4            1/1       Running            0          11s       100.64.1.23   ubuntu-4    
         ```
 
+* to completely clean up kubeadm
 
+    * on master node
+    
+	```
+	kubectl drain ubuntu-3 --delete-local-data --force --ignore-daemonsets
+	kubectl delete node ubuntu-3
+	kubectl drain ubuntu-4 --delete-local-data --force --ignore-daemonsets
+	kubectl delete node ubuntu-4
+	```
+	
+	* on each node
+	
+	```
+	sudo kubeadm reset
+	```
 
+	* on master node, after reset
+	
+	```
+	sudo rm -rf /var/etcd
+	```
 
 
 ## Links
