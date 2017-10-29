@@ -746,3 +746,5 @@ I'll continue with connectivity between the container and the external network i
 ## Links
 * [Kubernetes and Calico Part 1](Calico-and-Kubernetes-part-1)
 * [Kubernetes and Calico Part 3](Calico-and-Kubernetes-part-3)
+* [Kubernetes and Calico Part 4](Calico-and-Kubernetes-part-4)
+
