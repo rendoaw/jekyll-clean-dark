@@ -33,6 +33,11 @@ I'll split the post into the following
 	* This part will focus on how to establish connectivity between container and external world.
 	* To jump to part to, you can go to [Kubernetes and Calico Part 3](Calico-and-Kubernetes-part-3)
 
+* Part 4
+	* This part will cover IPv6 on container
+	* To jump to part to, you can go to [Kubernetes and Calico Part 4](Calico-and-Kubernetes-part-4)
+
+
 
 
 ## Target topology
@@ -514,3 +519,4 @@ If everything looks OK, let's check the setup in more detail. I'll cover this in
 ## Links
 * [Kubernetes and Calico Part 2](Calico-and-Kubernetes-part-2)
 * [Kubernetes and Calico Part 3](Calico-and-Kubernetes-part-3)
+* [Kubernetes and Calico Part 4](Calico-and-Kubernetes-part-4)
