@@ -16,7 +16,7 @@ My wife had been trying to find a summer camp program that may be suitable for o
 
 I was curious and start to inspect the html code and found out that they have pretty much consistent layout. It also seems pretty easy to parse. So, i was thinking, if i can crawl and parse this website, i can put them into my elasticsearch instance at my home lab and from there it should be easy to filter the information. 
 
-Lon story short, i created the simple crawler using python and beautiful soup 4 and then feed the result to elastic search using elasticsearch python module. 
+Long story short, i created the simple crawler using python and beautiful soup 4 and then feed the result to elastic search using elasticsearch python module. 
 
 Here is the snapshot of my elasticsearch data:
 
