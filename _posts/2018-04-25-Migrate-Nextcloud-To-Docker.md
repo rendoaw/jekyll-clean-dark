@@ -18,14 +18,14 @@ date: 2018-04-25T10:39:55-04:01
 
 ## What i have
 
-    * I have an Nextcloud (derivative of owncloud) hosted in one of VPS provider under domain let say, cloud.mydomain.com
-    * This nextcloud service has public SSL certificate from let's encrypt.
+* I have an Nextcloud (derivative of owncloud) hosted in one of VPS provider under domain let say, cloud.mydomain.com
+* This nextcloud service has public SSL certificate from let's encrypt.
 
 ## What i want 
 
-    * I want to combined the nextcloud service into one of my other server
-    * The target server already have several web service which is behind nginx reverse proxy. 
-    * This nextcloud service should be put behind nginx as well
+* I want to combined the nextcloud service into one of my other server
+* The target server already have several web service which is behind nginx reverse proxy. 
+* This nextcloud service should be put behind nginx as well
 
 
 
@@ -76,6 +76,7 @@ date: 2018-04-25T10:39:55-04:01
     * I am exposing nextcloud UI from port 80 inside container to host port 10080
 
 
+
 * Attach to the container, and fix the permission
 
     ```
@@ -89,6 +90,7 @@ date: 2018-04-25T10:39:55-04:01
     # chown -R www-data www
     # chmod -R 0770 www
     ```
+
 
 * Attach to the container, and add cloud.mydomain.com to trusted domain
 
@@ -106,12 +108,15 @@ date: 2018-04-25T10:39:55-04:01
         ),
     ```
 
+
 * Connect to https://newserver:10080 and re-setup nextcloud
     * set admin username/password
     * Since this is personal nextcloud, sqllite is enough for me
     * Set data directory to /data/www
 
+
 * Try to login to https://newserver:10080 and via see if i can see all the files
+
 
 * On new server Configure nginx to redirect https://cloud.mydomain.com to http://localhost:10080
 
@@ -156,15 +161,19 @@ date: 2018-04-25T10:39:55-04:01
     }
     ```
 
+
 * Restart nginx
 
     ```
     # /etc/init.d/nginx restart
     ```
 
+
 * Update the DNS to point cloud.mydomain.com to new server IP
 
+
 * Wait until DNS changes is propagated
+
 
 * Try to open the nextcloud using the old domain https://cloud.mydomain.com
 
