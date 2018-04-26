@@ -1,9 +1,9 @@
 ---
 layout: post
 comments: true
-title: "Migrate Nextcloud from VM to Docker"
+title: "Migrate Nextcloud from VM to Docker Container"
 categories: blog
-descriptions: Migrate Nextcloud from VM to Docker in Simple Way
+descriptions: Migrate Nextcloud from VM to Docker in Simple Step
 tags: 
   - docker
   - nextcloud
