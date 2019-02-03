@@ -30,7 +30,7 @@ Few thing important:
 * make sure you have virtual serial console. You can use virsh console <vmname> or like me, i prefer to setup telnet port for VM serial console
 
 
-  ```
+```
 <domain type='kvm'>
   <name>onie-master-test</name>
   <memory unit='KiB'>4096000</memory>
@@ -118,7 +118,7 @@ Few thing important:
   </devices>
 </domain>
 
-  ```
+```
   
   
 ### Launch the VM
