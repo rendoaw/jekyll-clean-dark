@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title: "Tring Whitebox OS on VM"
+title: "Trying Whitebox OS on VM"
 categories: blog
 descriptions: Trying multiple whitebox OS on VM
 tags: 
