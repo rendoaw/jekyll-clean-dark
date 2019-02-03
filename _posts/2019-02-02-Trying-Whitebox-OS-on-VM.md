@@ -69,24 +69,24 @@ It is a non-free OS like Cumulus, but for now let's call it as "sonie-36"
 * Sonic
   * Use the ONIE image created by [Install ONIE on VM](Install-ONIE-on-VM)
   * Use onie-nos-install or install_url command to install Sonic binary
-  * Sonic binary image for VM can be downloaded from here: https://sonic-jenkins.westus2.cloudapp.azure.com/job/vs/job/buildimage-vs-image-frr/lastSuccessfulBuild/artifact/target/sonic-vs.bin
+  * Sonic binary image for VM can be downloaded from here: (https://sonic-jenkins.westus2.cloudapp.azure.com/job/vs/job/buildimage-vs-image-frr/lastSuccessfulBuild/artifact/target/sonic-vs.bin)
   
 * Openswitch(OPX)
   * Use the ONIE image created by [Install ONIE on VM](Install-ONIE-on-VM)
   * Use onie-nos-install or install_url command to install OPX binary
   * OPX binary image for VM can be downloaded from here:
-    * http://archive.openswitch.net/installers/3.1.0/Dell-EMC/PKGS_OPX-3.1.0-installer-x86_64.bin
-    * http://archive.openswitch.net/
+    * (http://archive.openswitch.net/installers/3.1.0/Dell-EMC/PKGS_OPX-3.1.0-installer-x86_64.bin)
+    * (http://archive.openswitch.net/)
   * OPX binary image does not include any routing protocol daemon. We need to install Frrouting/Quagga, BIRD or any other daemon separately
   * for now, to make it easier, i am using FRRouting as well for this OPX.
   
 * Cumulus VX
-  * There are two option. The first and easy way is to use ready to use Cumulus VX image from https://cumulusnetworks.com/products/cumulus-vx/
-  * 2nd option, is using cumulus VX onie image, for example: https://cumulusnetworks.com/products/cumulus-vx/download/thanks/onie-372-/
+  * There are two option. The first and easy way is to use ready to use Cumulus VX image from (https://cumulusnetworks.com/products/cumulus-vx/)
+  * 2nd option, is using cumulus VX onie image, for example: (https://cumulusnetworks.com/products/cumulus-vx/download/thanks/onie-372-/)
   
   
 * vEOS
-  * Although we can install EOS on some 3rd party whitebox switch, it still not easy to install it on VM with ONIE. For now, we use the ready to use vEOS image from https://www.arista.com/en/support/software-download
+  * Although we can install EOS on some 3rd party whitebox switch, it still not easy to install it on VM with ONIE. For now, we use the ready to use vEOS image from (https://www.arista.com/en/support/software-download)
   
   
 ## Some outputs
