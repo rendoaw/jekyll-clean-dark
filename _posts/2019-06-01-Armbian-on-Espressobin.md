@@ -33,7 +33,11 @@ Armbian instruction looks scary at the beginning since it involves updating the 
 
 ### Find out the exact model
 
-U-Boot image are very hardware specific. The correct image name will have the following naming format: flash-image-(ddr3|ddr4)-MEM-RAM_CHIPS-CPU_DDR.bin
+U-Boot image are very hardware specific. The correct image name will have the following naming format: 
+
+```
+flash-image-(ddr3|ddr4)-MEM-RAM_CHIPS-CPU_DDR.bin
+```
 
 From the existing u-boot output via serial console below, i know that my board has 1GB RAM, CPU clock 1000MHz DDR clock 800MHz.
 Based on other source, i also know that espressobin v5 is using DDR3. 
