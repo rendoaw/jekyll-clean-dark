@@ -25,8 +25,8 @@ Docker for running pi-hole
 Everything was fine, but i still want to try to get ubuntu or at least debian based linux. I know I can't expect this to be smooth process, so in addition to get a new micro sd card, i also bought a mikrotik RB750GR3 as my temporary home gateway until i am satisfied with my new espressobin setup. 
 
 
-As my first attempt, i am following http://wiki.espressobin.net/tiki-index.php?page=Boot+from+removable+storage+-+Ubuntu. The instruction is complete and i can get the ubuntu 16.04 installed and running in my espressobin. As mentioned in the instruction, ip routing is not enabled by default, which is fine, i guess. But, for unknown reason, i could not even connect it to the network. I tried to put static IP or DHCP on any interface (wan, lan, eth0, ..), then after few minutes, the system crashed. 
-Since i don't have any idea how to fix it, i started to check armbian distribution from https://www.armbian.com/espressobin/
+As my first attempt, i am following (http://wiki.espressobin.net/tiki-index.php?page=Boot+from+removable+storage+-+Ubuntu). The instruction is complete and i can get the ubuntu 16.04 installed and running in my espressobin. As mentioned in the instruction, ip routing is not enabled by default, which is fine, i guess. But, for unknown reason, i could not even connect it to the network. I tried to put static IP or DHCP on any interface (wan, lan, eth0, ..), then after few minutes, the system crashed. 
+Since i don't have any idea how to fix it, i started to check armbian distribution from (https://www.armbian.com/espressobin/)
 
 Armbian instruction looks scary at the beginning since it involves updating the u-boot. I decided to try, and here are the steps.
 
@@ -52,8 +52,8 @@ Model: Marvell Armada 3720 Community Board ESPRESSOBin
 DRAM:  1 GiB
 ```
 
-Now, the only missing part is whether my board has 1 or 2 RAM chips. Unfortunately, v5 picture from http://wiki.espressobin.net/tiki-index.php?page=Ports+and+Interfaces#ESPRESSObin_v5_and_older_revisions does not mention which one is the RAM chip clearly, unlike the v7 picture. 
-By comparing v5 and v7, and looking at my board, i am quite sure i have 1 RAM Chip, so in this case i need to download this file to USB drive https://dl.armbian.com/espressobin/u-boot/flash-image-ddr3-1g-1cs-1000_800.bin
+Now, the only missing part is whether my board has 1 or 2 RAM chips. Unfortunately, v5 picture from (http://wiki.espressobin.net/tiki-index.php?page=Ports+and+Interfaces#ESPRESSObin_v5_and_older_revisions) does not mention which one is the RAM chip clearly, unlike the v7 picture. 
+By comparing v5 and v7, and looking at my board, i am quite sure i have 1 RAM Chip, so in this case i need to download this file to USB drive (https://dl.armbian.com/espressobin/u-boot/flash-image-ddr3-1g-1cs-1000_800.bin)
 
 
 ### Update the u-boot
@@ -121,12 +121,12 @@ Marvell>>
 
 ### Flash the Armbian image to micro sd card
 
-I choose Armbian Stretch image from https://dl.armbian.com/espressobin/Debian_stretch_next.7z and then use balenaEtcher to flash it. 
+I choose Armbian Stretch image from (https://dl.armbian.com/espressobin/Debian_stretch_next.7z) and then use balenaEtcher to flash it. 
 
 
 ### Boot the armbian
 
-https://www.armbian.com/espressobin/ has instruction on how to setup the boot environment, but unfortunately it did not work for me. 
+(https://www.armbian.com/espressobin/) has instruction on how to setup the boot environment, but unfortunately it did not work for me. 
 After several trial and error, looking at few examples from the armbian/espressobin forum, i managed to get the proper environment
 
 
