@@ -44,6 +44,9 @@ Since every network is uniq, and everyone's situation is different, maybe not ev
 Let's start with the potential use case.
 
 
+---
+
+
 ### Use cases
 
 First of all, we need to define, why do we need to create a network model? What benefit can we get from it?
@@ -100,6 +103,9 @@ In my case, these are the problems that i want to solve.
 
 
 Some cases are much harder to solve than the other, that is OK, we don't need to solve everything at once. But let's keep all of them for later.
+
+
+---
 
 
 ### Different types and examples of data model in networking
@@ -224,6 +230,8 @@ Hopefully, at this point we have some idea how each data model should look like 
 As mentioned earlier, I usually prefer to model the live data first. Modeling the live data can be done by collecting the live configuration and other things, consolidating them to generate the live model. Then, we can take a snapshot of the live data as the seed for the intent model. The next section will try to provide some idea how to put this model based network in practice.
 
 
+---
+
 
 ### Model based networking life cycle
 
@@ -283,6 +291,7 @@ Based on the live model that we have, combined with the audit report, we may wan
 Everything deployed will be decommissioned eventually. Nothing special here except we must delete those devices from the model.  
 
 
+---
 
 ### Summary
 
@@ -308,6 +317,8 @@ Just to provide some idea about the tooling, Here are few open-source applicatio
 
 One last thing, everything I write above is completely based on what i have been doing so far. If you have a similar requirement or if you have found a better solution, approach, tools, or anything, please let me know.
 
+
+---
 
 
 ### References
