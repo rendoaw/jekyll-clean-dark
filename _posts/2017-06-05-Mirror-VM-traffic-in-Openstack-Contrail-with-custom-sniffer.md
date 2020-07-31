@@ -116,7 +116,7 @@ To use we own VM as sniffer VM, we need to launch the VM as an Service Instance.
 In my example above, i assigned second interface as left interface, this means the mirrored packet will be sent to this interface. Before we continue to decode the mirrored packets, let go back and see what is the actual wireshark output from the official Analyzer VM. 
 
 
-![analyzer vm wireshark output]({{site.baseurl}}/images/wireshark_in_analyzer_vm.png)
+![analyzer vm wireshark output]({{site.baseurl}}/assets/images/wireshark_in_analyzer_vm.png)
 
 From the output above, we can see that the mirrored packet received by Analyzer VM with some additional headers. 
 Yes, vrouter will send the mirrored packet to the sniffer encapsulated inside UDP port 8099 with some additional header describing about which the virtual-network that the mirroring was performed.
@@ -140,7 +140,7 @@ As expected, sniffer receives UDP encapsulated packets. I went to try again and 
 
 Here is the result from wireshark, it can't decode UDP 8099. 
 
-![wireshark output vanilla]({{site.baseurl}}/images/contrail_wireshark_vanilla.png)
+![wireshark output vanilla]({{site.baseurl}}/assets/images/contrail_wireshark_vanilla.png)
 
 
 I also found out that there is a Lua-based custom dissectore provided by Contrail installation, they are:
@@ -149,7 +149,7 @@ I also found out that there is a Lua-based custom dissectore provided by Contrai
 
 I loaded them into wireshark and try to decode again. It's a bit better now, it can decode some of the headers but it still can't decode the original mirrored packets.
 
-![wireshark output with agent_dissector]({{site.baseurl}}/images/contrail_wireshark_with_agent_dissector.png)
+![wireshark output with agent_dissector]({{site.baseurl}}/assets/images/contrail_wireshark_with_agent_dissector.png)
 
 
 So far, i have no idea where to get the proper dissector. Maybe later i will modify the agent_dissector to be able to decode the original packets, but for now, i'll take the simple approach but removing the contrail header from original packet manually using editcap. 
@@ -164,7 +164,7 @@ So, let's remove the first 114 byte from the pcap file
 
 Now, if we open contrail-mirror-no-header.pcap, we will see the original mirrored packets.
 
-![wireshark output no header]({{site.baseurl}}/images/contrail_wireshark_no_header.png)
+![wireshark output no header]({{site.baseurl}}/assets/images/contrail_wireshark_no_header.png)
 
 
 

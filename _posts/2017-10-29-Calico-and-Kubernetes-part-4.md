@@ -592,7 +592,7 @@ Since Calico can't advertise IPv6 routes to Contrail, I am using vMX to verify i
 
 * Verify if Contrail received the routes
 
-    ![Contrail compute node routing table]({{site.baseurl}}/images/contrail_ipv6_routes.png)
+    ![Contrail compute node routing table]({{site.baseurl}}/assets/images/contrail_ipv6_routes.png)
 
 
 

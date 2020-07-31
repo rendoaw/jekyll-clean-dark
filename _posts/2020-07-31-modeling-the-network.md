@@ -33,7 +33,7 @@ The rest of this post will focus on why we need a network model, how to create i
 
 In high level, model based networking can be illustrated as the following
 
-![model based networking]({{site.baseurl}}/images/model_based_networking.png)
+![model based networking]({{site.baseurl}}/assets/images/model_based_networking.png)
 
 At the heart of the diagram, there are 2 data models, one is the intent network model and second one is the network live model. Ideally, both of them should have consistent language or data structure. It does not matter which one should be created first, it depends on each situation. We can start from the intent side, or from the live side, and at the end, both data are required to be useful.
 

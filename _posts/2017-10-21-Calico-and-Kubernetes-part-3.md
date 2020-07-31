@@ -413,15 +413,15 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
 
     * Control node routing table to 10.91.1.128
     
-        ![Contrail Control Node routing table ]({{site.baseurl}}/images/contrail_control_node_ecmp.png)
+        ![Contrail Control Node routing table ]({{site.baseurl}}/assets/images/contrail_control_node_ecmp.png)
 
     * Control node routing table to 10.91.1.128 via ubuntu-4
 
-        ![Contrail Control Node routing table to Node 1 ]({{site.baseurl}}/images/contrail_control_node_to_ubuntu_4.png)
+        ![Contrail Control Node routing table to Node 1 ]({{site.baseurl}}/assets/images/contrail_control_node_to_ubuntu_4.png)
 
     * Control node routing table to 10.91.1.128 via ubuntu-3
 
-        ![Contrail Control Node routing table to Node 2]({{site.baseurl}}/images/contrail_control_node_to_ubuntu_3.png)
+        ![Contrail Control Node routing table to Node 2]({{site.baseurl}}/assets/images/contrail_control_node_to_ubuntu_3.png)
 
     * From the output above, contrail control node received the same routes from both k8s node ubuntu-3 and ubuntu-4. 
         * Although the container is hosted by ubuntu-3, ubuntu-4 also advertised the same route because there is a full-mesh bgp peer between all the k8s node.
@@ -432,7 +432,7 @@ traceroute to 10.91.1.128 (10.91.1.128), 30 hops max, 40 byte packets
     * In out setup, we kind of lucky, both ubuntu-3 and ubuntu-4 VM are hosted by Openstack compute-1 (192.168.1.18)
     * In this we can check the routing table on compute-1
     
-        ![Contrail compute node routing table]({{site.baseurl}}/images/contrail_compute_to_ubuntu_4.png)
+        ![Contrail compute node routing table]({{site.baseurl}}/assets/images/contrail_compute_to_ubuntu_4.png)
         
     * OK, looks like packet going to 10.91.1.128 is sent thru ubuntu-4 node. 
 

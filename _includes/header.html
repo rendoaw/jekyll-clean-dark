@@ -1,59 +1,61 @@
+{% if site.tags != "" %}
+{% include collecttags.html %}
+{% endif %}
+
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>{{ site.name }}{% if page.title %} | {{ page.title }} {% endif %}</title>
-  <meta name="theme-color" content="#222222" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="{{ site.baseurl}}/js/jquery.min.js"></script>
-  <script src="{{ site.baseurl}}/js/bootstrap.min.js"></script>
-  <script src="{{ site.baseurl}}/js/header.js"></script>
-  <script src="{{ site.baseurl}}/js/toc.js"></script>
-  <link href="{{ site.baseurl}}/css/bootstrap.min.css" rel="stylesheet">
-  <link href="{{ site.baseurl}}/css/theme.css" rel="stylesheet">
-  <link href="{{ site.baseurl}}/css/syntax.css" rel="stylesheet">
-  <link href="{{ site.baseurl}}/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-</head>
+    <meta charset="UTF-8">
+    <title>{{ site.name }}{% if page.title %} | {{ page.title }} {% endif %}</title>
+    <meta name="theme-color" content="#222222"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ '/assets/js/jquery.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/popper.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/bootstrap4.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/header.js' | relative_url }}"></script>
+    <script src="{{ '/assets/css/svg-with-js/js/fontawesome-all.js' | relative_url }}"></script>
+    <link href="{{ '/assets/css/bootstrap4.min.css' | relative_url }}" rel="stylesheet">
+    <link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet">
+    <link href="{{ '/assets/css/syntax.css' | relative_url }}" rel="stylesheet">
+ </head>
 
 <body>
 
-  {% include google-analytics.html %}
-  {% include yandex-metrica.html %}
+{% include google-analytics.html %}
+{% include yandex-metrica.html %}
 
- <script type="text/javascript">
-  WebFontConfig = {
-    google: {
-      families: ['Ubuntu::latin']
-    }
-  };
-  (function() {
-    var wf = document.createElement('script');
-    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-    wf.type = 'text/javascript';
-    wf.async = 'true';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(wf, s);
-  })();
+<script type="text/javascript">
+    WebFontConfig = {
+        google: {
+            families: ['Ubuntu::latin']
+        }
+    };
+    (function () {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
 </script>
 
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
+        <a class="navbar-brand" href="{{ '' | relative_url }}/">{{ site.name }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="{{site.baseurl }}/">{{ site.name }}</a>
-      </div>
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="{{site.baseurl }}/">/home</a></li>
-          <li><a href="{{site.baseurl }}/archive.html">/archive</a></li>
-          <li><a href="{{site.baseurl }}/tags.html">/tags</a></li>
-          <li><a href="{{site.baseurl }}/about.html">/about</a></li>
-        </ul>
-      </div>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ '' | relative_url }}/">/home</a>
+                <a class="nav-item nav-link" href="{{ 'archive' | relative_url }}">/archive</a>
+                <a class="nav-item nav-link" href="{{ 'tags' | relative_url }}">/tags</a>
+                <a class="nav-item nav-link" href="{{ 'about' | relative_url }}">/about</a>
+            </div>
+        </div>
     </div>
-  </nav>
+</nav>

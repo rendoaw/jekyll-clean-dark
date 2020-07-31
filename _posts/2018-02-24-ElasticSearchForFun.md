@@ -20,6 +20,6 @@ Long story short, i created the simple crawler using python and beautiful soup 4
 
 Here is the snapshot of my elasticsearch data:
 
-![elk_summer_camp]({{site.baseurl}}/images/elk_summer_camp.png)
+![elk_summer_camp]({{site.baseurl}}/assets/images/elk_summer_camp.png)
 
 

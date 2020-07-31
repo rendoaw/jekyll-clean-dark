@@ -67,7 +67,7 @@ Here is the simplified topology diagram
 
 * To allow connectivity between external network and any subnet behind the VM, we need to enable "allow transit traffic" on the virtual network where the VM is connected to. In this example, the virtual network name is *public*
 
-![Allow transit]({{site.baseurl}}/images/contrail_allow_transit.png)
+![Allow transit]({{site.baseurl}}/assets/images/contrail_allow_transit.png)
 
 
 
@@ -311,7 +311,7 @@ Here is the simplified topology diagram
 
 * We also need to go back to Contail UI to configure BGP peering to Calico Bird daemon inside Docker VM
 
-    ![Contrail BGP peer configuration]({{site.baseurl}}/images/contrail_calico_bgp_peer_status.png)
+    ![Contrail BGP peer configuration]({{site.baseurl}}/assets/images/contrail_calico_bgp_peer_status.png)
 
 
 * Verify the BGP peer setting
@@ -482,7 +482,7 @@ Here is the simplified topology diagram
 
 * Let's check the Contrail side. Before starting doing that, we need to know what is the vxlan id for the contrail virtual network that Docker VM is attached to
 
-    ![find vxlan id]({{site.baseurl}}/images/contrail_calico_find_vxlan_id.png)
+    ![find vxlan id]({{site.baseurl}}/assets/images/contrail_calico_find_vxlan_id.png)
 
 
 * Let's start with the compute node vrouter CLI
@@ -597,17 +597,17 @@ Here is the simplified topology diagram
 
     * Check route to the container IP from Contrail control node
         
-        ![Contrail control node route]({{site.baseurl}}/images/contrail_control_route_from_calico.png)
+        ![Contrail control node route]({{site.baseurl}}/assets/images/contrail_control_route_from_calico.png)
 
 
     * Check route to the container IP from Contrail vrouter
 
-        ![Vrouter route]({{site.baseurl}}/images/contrail_compute_route_from_calico.png)
+        ![Vrouter route]({{site.baseurl}}/assets/images/contrail_compute_route_from_calico.png)
     
 
     * Check BGP peering status to Calico
 
-        ![Contrail BGP peer status]({{site.baseurl}}/images/contrail_calico_bgp_peer_status.png)
+        ![Contrail BGP peer status]({{site.baseurl}}/assets/images/contrail_calico_bgp_peer_status.png)
 
 
 

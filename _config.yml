@@ -10,6 +10,9 @@ url: http://rendoaw.github.io
 # For a project page here should be a project name. Otherwise (for user's/organizaion's page leave it empty)
 baseurl: ''
 
+author: Pavel Makhov
+copyright: 2015-2018
+
 share:
   facebook: true
   twitter: true
@@ -38,7 +41,7 @@ yandex_metrica:
 disqus: rendoaw
 comments: true
 
-permalink: /:year/:month/:title
+permalink: /:year/:month/:title/
 
 # Enable for using pages, more details are here: http://jekyllrb.com/docs/pagination/
 #paginate: 3
