@@ -4,10 +4,11 @@ comments: true
 title: "Modeling the Network, What, Why, How?"
 categories: blog
 tags:
-  - network modeling
+  - network_modeling
   - intent
   - model
 date: 2020-07-31T17:39:55-04:00
+toc: true
 ---
 
 
