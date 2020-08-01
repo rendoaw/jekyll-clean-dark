@@ -11,8 +11,6 @@ date: 2020-07-31T17:39:55-04:00
 ---
 
 
-## Modeling the Network, What, Why, How?
-
 
 We have been hearing a lot about intent based networking these days. Usually I don't really care much about naming or terminology, but I feel this one is incomplete, or maybe it is just me that interprets the message incorrectly.
 
@@ -46,8 +44,7 @@ Let's start with the potential use case.
 
 ---
 
-
-### Use cases
+# Use cases
 
 First of all, we need to define, why do we need to create a network model? What benefit can we get from it?
 
@@ -108,16 +105,16 @@ Some cases are much harder to solve than the other, that is OK, we don't need to
 ---
 
 
-### Different types and examples of data model in networking
+# Different types and examples of data model in networking
 
 After we know our use cases, the next step is to think how we should organize the data. Regardless of intent model or live model, we can classify the data into the following types. Again, there is no single correct answer for this, this classification may fit for my case, but your situation and preference could be different.
 
-##### _Device level model_
+## _Device level model_
 
 The first thing we want to model is the device level model. In theory, device models should have everything which is required to configure the device, it covers but not limited to, physical/logical interface, hardware knob, routing protocol, access-list, and any configuration that usually we do on each device. We may not need to model every single command/knob that we have on every NOS from day one, we can start by modeling something that is significant to the configuration. In addition to the config, device models may include any hardware specific attributes as well as its limitations.
 
 
-_Building the model_
+### Building the model
 
 * The simple approach
     * One way to start is by picking one of your favorite NOS config as the "base" model, usually either Juniper JunOS config style or Cisco IOS style, and normalize the other NOS config into the base model.
@@ -138,7 +135,7 @@ In general, this device level model is more than enough if we only care about pu
 
 
 
-##### Multi-layer topology model
+## Multi-layer topology model
 
 In general, the topology model defines the connection between one device to the others. Each communicating device is modeled as a node and the connections between the devices are modeled as links (a.k.a edges) between the nodes.
 
@@ -161,7 +158,7 @@ We call it as multi-layer topology model because for a single network we may hav
 One way to describe the dependency between multiple topologies is by using the supporting link concept as described in the IETF YANG Model.
 
 
-_Building the model_
+### Building the model
 
 * Simple approach using DOT format
 DOT (graph description language) - https://en.wikipedia.org/wiki/DOT_(graph_description_language)
@@ -178,7 +175,7 @@ Regardless of the format, topology models are very similar. At minimum, it alway
 
 
 
-##### Services model
+## Services model
 
 Service model describes how each type of "customer" is connected to the "provider" network devices. It also defines the characteristic of the connectivity between one customer and the others. Service data model may consist of, but not limited to the following:
 
@@ -209,7 +206,7 @@ Beyond that, a service model can be used to describe the traffic flow from one e
 
 
 
-##### Conformance/constraint model
+## Conformance/constraint model
 
 This is the last data type and the most abstract/high level data model. This model is more of a high level intent which defines the requirement/constraint of the network topology as well as the device itself.
 
@@ -233,11 +230,11 @@ As mentioned earlier, I usually prefer to model the live data first. Modeling th
 ---
 
 
-### Model based networking life cycle
+# Model based networking life cycle
 
 We have our use cases, we have some idea how we should build the model, now let's explore how our regular workflow can be adjusted by introducing a model based networking concept.
 
-##### 1. Design phase
+## 1. Design phase
 
 Instead of creating a Visio/Powerpoint diagram manually, we can define our design into some kind language, and convert it into a topology diagram and configuration. Basically, in this phase, we should build our intent model.
 
@@ -250,14 +247,14 @@ Instead of creating a Visio/Powerpoint diagram manually, we can define our desig
 * Once we are happy with the design, store them somewhere that can be easily accessible by zerotouch provisioning system or any other system, including the NMS.
 
 
-##### 2. Deployment phase
+## 2. Deployment phase
 
 This phase could be an initial deployment or regular day-to-day operational update. For new device deployment, whenever applicable, ZTP is the preferred option. ZTP can retrieve the intent model to configure the device. The actual process can vary, some systems may have ZTP script run on the device to pull the full config and apply it, or other systems may run ZTP to call home the provisioning system and ask the provisioning system to push the full config.
 
 For day to day operation, any config change should be in sync with the intent model. In a greenfield network, or in homogeneous network setup, this should be relatively simple. The tooling can be set up to always update the intent, do some checks and other things before pushing the new configuration to the real device. In some other networks, or maybe during outage troubleshooting, it could be challenging, people may use different tool or manual changes to update the configuration. This is one of the reasons why periodic comparison between intent and live will be very useful, as well as the capability to manually override the intent model based on the live model.
 
 
-##### 3. Discovery and monitoring
+## 3. Discovery and monitoring
 
 Every network is different. In some places, we may know exactly what are the devices in the network and how many of them, but in some places, we may not. Periodic discovery process using whatever means possible is useful to find every one of them, it could be using LLDP, arp table, mac table, ping sweep, IGP database, or other things.
 
@@ -278,7 +275,7 @@ The next part is the monitoring part. There is nothing special with this, we can
 Instead of simply storing the bandwidth/memory/cpu/etc metric, or raw syslog output, we can add additional information like: the neighbor of the interface, the role of the interface, customer ID, network device OS and chassis information. With this additional info, the data will be more meaningful, and can be used to better tweak the alarming system. From the operation side, people can easily search/filter the data during maintenance/troubleshooting.
 
 
-##### 4. Audit & Optimization
+## 4. Audit & Optimization
 
 Different types of audit can be performed by comparing the device level model or topology model with the conformance model as listed in the previous "Conformance model" section, and generating the relevant report. In many cases, we may have some alarm in place, for example if bandwidth utilization is higher than the threshold, but we may want to see the aggregated report. For example, how many links are saturated and how often.
 It is not uncommon that an audit report can catch something that we did in the past as a workaround and then we completely forgot to normalize it.
@@ -286,14 +283,14 @@ It is not uncommon that an audit report can catch something that we did in the p
 Based on the live model that we have, combined with the audit report, we may want to try to improve the design. There are several commercial and open-source tools out there that we can use to simulate our ideas. We can convert our model to any kind of input that the simulation tool needs. If we are happy with the result, we can put the change into the intent model.
 
 
-##### 4. Decommission
+## 5. Decommission
 
 Everything deployed will be decommissioned eventually. Nothing special here except we must delete those devices from the model.  
 
 
 ---
 
-### Summary
+# Summary
 
 So, we went through the use cases, categorizing the data and some sample workflow. Hopefully it gives us some better ideas and motivation to move to a model based network.
 
@@ -321,7 +318,7 @@ One last thing, everything I write above is completely based on what i have been
 ---
 
 
-### References
+# References
 
 * Openconfig https://www.openconfig.net/
 * Openconfig released model: http://ops.openconfig.net/branches/models/master/

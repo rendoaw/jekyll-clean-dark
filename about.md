@@ -5,4 +5,4 @@ title: About
 ---
 
 # Some info 
-.. nothing importang here :)
+.. nothing important here :)
